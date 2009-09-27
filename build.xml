@@ -1,0 +1,17 @@
+<project basedir="." name="Yo Da Funkta" default="jar">
+
+	<target name="clean">
+		<delete dir="build" />
+	</target>
+	
+	<target name="compile">
+		<mkdir dir="build" />
+		<javac srcdir="src" destdir="build" debug="on" excludes="**/*Test.java" />
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar destfile="yodafunkta.jar" basedir="./build" />
+	</target>
+	
+	<!-- Hmmm... no, no tests here, I use them through the IDE -->
+</project>
