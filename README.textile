@@ -58,7 +58,7 @@ Also, you can declare the functor "on the fly" (Particularly, I prefer to declar
 </code></pre>
     
 If you have a static method that returns "boolean", you can use filters:
-
+git remote add origin git@github.com:ruliana/YoDaFunkta.git
 <pre><code>
     // you can use "f" of "functor", they as the same.
     // It's a matter of taste, again.
@@ -118,7 +118,7 @@ Currying is also supported:
     }
 </code></pre>
 
-.h2 What else?
+h2. What else?
 
 There are support for combining functor and other smaller niceties. Check the yodafunkta.FunctorTest class for more examples.
 
@@ -130,7 +130,7 @@ Also, some gotchas you might have know:
 
 3. Legal notice: You can copy, modify, use, do-whatever-you-want to this code and you can or cannot give me any credit (I really don't mind). However I provide no guarantee nor promises about the code (i.e. use it "as is" at your own risk). Use it if you like it, throw it in the garbage if you don't like it. :)
 
-.h2 Anything else?
+h2. Anything else?
 
 I wish you like it. Let me know if you are using it :)
 
