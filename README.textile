@@ -128,7 +128,7 @@ Also, some gotchas you might have know:
 
 2. It's a little slow. Since I made heavy use of reflection, the equivalent functor code is about 5~7x slower than the hard coded version. For a simple transformation of 100K elements, on my machine, the hard coded version took between 25 to 50 milliseconds, the functor version took between 120 to 180 milliseconds. IMHO, unless you need extreme performance, that's not big issue. But again, that's me, you might have another opinion.
 
-3. Legal notice: You can copy, modify, use, do-whatever-you-want to this code and you can or cannot give me any credit (I really don't mind). However I provide no guarantee nor promises about the code (i.e. use it "as is" at your own risk). Use it if you like it, throw it in the garbage if you don't like it. :)
+3. Legal notice: You can copy, modify, use, do-whatever-you-want to this code and you can or cannot give me any credit (I really don't mind). However, I provide no guarantee nor promises about the code (i.e. use it "as is" at your own risk). Use it if you like it, throw it in the garbage if you don't like it. :)
 
 h2. Anything else?
 
