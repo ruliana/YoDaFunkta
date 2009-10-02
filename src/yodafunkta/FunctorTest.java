@@ -33,6 +33,16 @@ public class FunctorTest extends TestCase {
         return min < target && target < max;
     }
     
+    private static final Functor sum = f("sum");
+    private static int sum(int a, int b) {
+        return a + b;
+    }
+
+    private static final Functor join = f("join");
+    private static String join(String a, String b) {
+        return a + ", " + b;
+    }
+    
     public void testRun() throws Exception {
         assertEquals(1, length.run("a"));
         assertEquals(4, length.run("test"));
@@ -94,6 +104,13 @@ public class FunctorTest extends TestCase {
         assertEquals(asList("this", "yet", "test"), between2and5OfLength.filter("this", "is", "yet", "another", "test"));
     }
     
+    public void testFoldLeft() throws Exception {
+        
+        assertEquals(15, (int) sum.foldLeft(0, asList(1, 2, 3, 4, 5)));
+        assertEquals(15, (int) (Integer) sum.foldLeft(asList(1, 2, 3, 4, 5)));
+        assertEquals("this, is, a, test", join.fold("this", "is", "a", "test"));
+    }
+    
     public void testPerformance() throws Exception {
         
         // Creating the target
@@ -116,7 +133,7 @@ public class FunctorTest extends TestCase {
         long elapsedFunctor = System.currentTimeMillis() - startFunctor;
         
         assertEquals(resultHardCoded, resultFunctorVersion);
-        assertTrue("Expected to be at most 6 times slower than the hard coded version", elapsedFunctor < 7* elapsedHardCoded);
+        assertTrue("Expected to be at most 7 times slower than the hard coded version", elapsedFunctor < 7* elapsedHardCoded);
         System.out.println(String.format("Hard coded: %3dms\n   Functor: %3dms", elapsedHardCoded, elapsedFunctor));
     }
 }

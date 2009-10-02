@@ -90,6 +90,46 @@ public abstract class Functor {
         return result;
     }
 
+    /**
+     * Alias for {@link #foldLeft(List)}
+     */
+    public <T> T fold(List<T> list) {
+        return foldLeft(list);
+    }
+    
+    public <T> T foldLeft(List<T> list) {
+        if (list == null || list.isEmpty()) return null;
+        if (list.size() == 1) return list.subList(0, 1).get(0); 
+        return foldLeft(list.subList(0, 1).get(0), list.subList(1, list.size())); 
+    }
+    
+    /**
+     * Alias for {@link #foldLeft(Object...)}
+     */
+    public <T> T fold(T... elements) {
+        return foldLeft(elements);
+    }
+    
+    public <T> T foldLeft(T... elements) {
+        return foldLeft(asList(elements));
+    }
+    
+    /**
+     * Alias for {@link #foldLeft(Object, List)} 
+     */
+    public <T, Z> T fold(T initValue, List<Z> list) {
+        return foldLeft(initValue, list);
+    }
+    
+    public <T, Z> T foldLeft(T initValue, List<Z> list) {
+        if (list == null || list.isEmpty()) return initValue;
+        T accum = initValue;
+        for (Z element : list) {
+            accum = run(accum, element);
+        }
+        return accum;
+    }
+
     public Functor of(Functor other) {
         return new CombineFunctor(this, other);
     }
