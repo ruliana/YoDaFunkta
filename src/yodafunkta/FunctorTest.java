@@ -4,8 +4,10 @@ import static java.util.Arrays.asList;
 import static yodafunkta.Functor.f;
 import static yodafunkta.Functor.functor;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import junit.framework.TestCase;
 
@@ -41,6 +43,14 @@ public class FunctorTest extends TestCase {
     private static final Functor join = f("join");
     private static String join(String a, String b) {
         return a + ", " + b;
+    }
+    private static String join(int a, int b) {
+        return String.valueOf(a) + String.valueOf(b);
+    }
+    
+    private static final Functor intGenerator = f("intGenerator");
+    private static int intGenerator(int i) {
+        return i + 1;
     }
     
     public void testRun() throws Exception {
@@ -111,6 +121,31 @@ public class FunctorTest extends TestCase {
         assertEquals("this, is, a, test", join.fold("this", "is", "a", "test"));
     }
     
+    public void testFunctorPolimorphism() throws Exception {
+        
+        assertEquals("a, b", join.run("a", "b"));
+        assertEquals("12", join.run(1, 2));
+    }
+    
+    public void testInfiniteList() throws Exception {
+        
+        InfiniteList<Integer> infiniteList = intGenerator.infiniteList(0);
+        assertEquals(new Integer(0), infiniteList.peek());
+        assertEquals(new Integer(0), infiniteList.poll());
+        assertEquals(new Integer(1), infiniteList.poll());
+        assertEquals(asList(0), infiniteList.subList(0, 1));
+        assertEquals(asList(1, 2, 3), infiniteList.subList(1, 4));
+        assertEquals(asList(5, 6), infiniteList.subList(5, 7));
+        
+        Iterator<Integer> iterator = infiniteList.iterator();
+        assertTrue(iterator.hasNext());
+        assertEquals(new Integer(0), iterator.next());
+        assertTrue(iterator.hasNext());
+        assertEquals(new Integer(1), iterator.next());
+        assertTrue(iterator.hasNext());
+        assertEquals(new Integer(2), iterator.next());
+    }
+    
     public void testPerformance() throws Exception {
         
         // Creating the target
@@ -133,7 +168,7 @@ public class FunctorTest extends TestCase {
         long elapsedFunctor = System.currentTimeMillis() - startFunctor;
         
         assertEquals(resultHardCoded, resultFunctorVersion);
-        assertTrue("Expected to be at most 7 times slower than the hard coded version", elapsedFunctor < 7* elapsedHardCoded);
-        System.out.println(String.format("Hard coded: %3dms\n   Functor: %3dms", elapsedHardCoded, elapsedFunctor));
+        System.out.println(String.format("Hard coded: %3dms\n   Functor: %3dms\nSlowliness: %3.2fx", elapsedHardCoded, elapsedFunctor, (double) elapsedFunctor / elapsedHardCoded));
+        assertTrue("Expected to be at most 9 times slower than the hard coded version", elapsedFunctor < 9 * elapsedHardCoded);
     }
 }

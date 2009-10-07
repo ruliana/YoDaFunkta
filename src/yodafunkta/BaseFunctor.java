@@ -8,8 +8,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 class BaseFunctor extends Functor {
 
@@ -17,7 +19,7 @@ class BaseFunctor extends Functor {
 
     private final String methodName;
 
-    private Method method;
+    private Map<String, Method> methodCache = new HashMap<String, Method>();
 
     public BaseFunctor(String methodName, Object... parameters) {
         setParameters(parameters);
@@ -148,10 +150,22 @@ class BaseFunctor extends Functor {
     }
 
     private Method theMethod(Object... parameters) throws ClassNotFoundException, NoSuchMethodException {
-        if (method == null) {
-            method = findMethod(parameters);
-        }
+        String key = parametersToTypeKey(parameters);
+        Method method = methodCache.get(key);
+        if (method != null) return method;
+        
+        method = findMethod(parameters);
+        methodCache.put(key, method);
         return method;
+    }
+    
+    private String parametersToTypeKey(Object... parameters) {
+        StringBuilder result = new StringBuilder();
+        for (Object param : parameters) {
+            result.append("|");
+            result.append(param.getClass().getName());
+        }
+        return result.toString();
     }
     
     @SuppressWarnings("unchecked")
@@ -162,7 +176,7 @@ class BaseFunctor extends Functor {
     protected Functor cloneItself() {
         BaseFunctor result = new BaseFunctor(methodName, getParameters());
         // No need to find the method again, if we already found it.
-        result.method = method;
+        result.methodCache = methodCache;
         return result;
     }
 }

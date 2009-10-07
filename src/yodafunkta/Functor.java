@@ -137,4 +137,8 @@ public abstract class Functor {
     public abstract <T> T run(Object... parameters);
     
     protected abstract Functor cloneItself();
+
+    public <T> InfiniteList<T> infiniteList(T startingElement) {
+        return new InfiniteList<T>(this, startingElement);
+    }
 }
