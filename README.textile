@@ -63,7 +63,7 @@ Also, you can declare the functor "on the fly" (Particularly, I prefer to declar
 </code></pre>
     
 If you have a static method that returns "boolean", you can use filters:
-git remote add origin git@github.com:ruliana/YoDaFunkta.git
+
 <pre><code>
     // you can use "f" of "functor", they as the same.
     // It's a matter of taste, again.
