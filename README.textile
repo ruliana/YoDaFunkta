@@ -17,7 +17,7 @@ h2. How to use and what it does?
 
 An example worth a thousand user manuals.
 
-To declare the functor simply create a static method and create the functor (I like to put the functor declaration right above the method).
+To declare the functor simply create a static method and create the functor. I like to put the functor declaration right above the method, it looks like an odd annotation.
 
 <pre><code>
     import static yodafunkta.Functor.f
